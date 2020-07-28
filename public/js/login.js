@@ -20,6 +20,7 @@ $(document).ready(function() {
     loginUser(userData.email, userData.password);
     emailInput.val("");
     passwordInput.val("");
+    console.log(emailInput);
   });
 
   // loginUser does a post to our "api/login" route and if successful, redirects us the the members page
