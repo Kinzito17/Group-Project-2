@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: true,
       validate: {
-        min: [1],
+        min: [10],
         isNumeric: true
       }
     },

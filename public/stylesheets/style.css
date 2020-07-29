@@ -26,6 +26,7 @@ form.login {
   color: black;
   font-size: 16px;
   display: inline;
+  font-weight: bolder;
 }
 
 .navi-link:hover {
