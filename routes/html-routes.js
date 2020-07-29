@@ -10,7 +10,7 @@ module.exports = function(app) {
     if (req.user) {
       return res.redirect("/members");
     }
-    res.sendFile(path.join(__dirname, "../public/signup.html"));
+    res.sendFile(path.join(__dirname, "../public/index.html"));
   });
 
   app.get("/signup", function(req, res) {
@@ -19,6 +19,22 @@ module.exports = function(app) {
     //   return res.redirect("/members");
     // }
     res.sendFile(path.join(__dirname, "../public/signup.html"));
+  });
+
+  app.get("/buy", function(req, res) {
+    // If the user already has an account send them to the members page
+    if (req.user) {
+      return res.redirect("/members");
+    }
+    res.sendFile(path.join(__dirname, "../public/login.html"));
+  });
+
+  app.get("/sell", function(req, res) {
+    // If the user already has an account send them to the members page
+    if (req.user) {
+      return res.redirect("/members");
+    }
+    res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
   app.get("/members", function(req, res) {
