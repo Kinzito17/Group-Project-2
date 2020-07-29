@@ -133,3 +133,13 @@ box-shadow: none;
 }
 
 
+#gardenCont{
+
+  text-align: center;
+}
+
+#shopCont{
+
+  text-align: center;
+  background-color: white;
+}

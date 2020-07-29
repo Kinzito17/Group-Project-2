@@ -5,10 +5,10 @@ var path = require("path");
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app) {
-  app.get("/", function(req, res) {
+  app.get("/index", function(req, res) {
     // If the user already has an account send them to the members page
     if (req.user) {
-      return res.redirect("/members");
+      return res.redirect("/");
     }
     res.sendFile(path.join(__dirname, "../public/index.html"));
   });
@@ -16,25 +16,25 @@ module.exports = function(app) {
   app.get("/signup", function(req, res) {
     // If the user already has an account send them to the members page
     if (req.user) {
-      return res.redirect("/members");
+      return res.redirect("/");
     }
     res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
 
   app.get("/buy", function(req, res) {
     // If the user already has an account send them to the members page
-    if (req.user) {
-      return res.redirect("/members");
+    if (!req.user) {
+      return res.redirect("/login");
     }
-    res.sendFile(path.join(__dirname, "../public/login.html"));
+    res.sendFile(path.join(__dirname, "../public/buy.html"));
   });
 
   app.get("/sell", function(req, res) {
     // If the user already has an account send them to the members page
-    if (req.user) {
-      return res.redirect("/members");
+    if (!req.user) {
+      return res.redirect("/login");
     }
-    res.sendFile(path.join(__dirname, "../public/login.html"));
+    res.sendFile(path.join(__dirname, "../public/sell.html"));
   });
 
   app.get("/members", function(req, res) {
@@ -48,7 +48,7 @@ module.exports = function(app) {
   app.get("/login", function(req, res) {
     // If the user already has an account send them to the members page
     if (req.user) {
-      return res.redirect("/members");
+      return res.redirect("/");
     }
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
