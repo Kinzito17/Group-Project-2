@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
     //First name
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         min: [1]
       }
@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
     //Last name
     lastName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         min: [1]
       }
@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
     //Phone
     phone: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         min: [1],
         isNumeric: true
