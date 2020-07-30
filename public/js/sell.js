@@ -1,11 +1,6 @@
 $(document).ready(function() {
 
   /* eslint-disable no-unused-vars */
-  // var loadFile = function(event) {
-  //   var image = document.getElementById("output");
-  //   image.src = URL.createObjectURL(event.target.files[0]);
-  // };
-
   var sellerForm = $("form.selling");
   var plantNameInput = $("input#title");
   var priceInput = $("input#price");
@@ -20,21 +15,17 @@ $(document).ready(function() {
       description: descriptionInput.val().trim(),
       imgUrl: imgUrlInput.val().trim()
     };
-    console.log(itemData);
-
-    document.getElementById("sellForm").reset();
-
+    
+    $("input#title").val("");
+    $("input#price").val("");
+    $("textarea#description").val("");
+    $("input#imgURL").val("");
     
     $.post("/api/sell", itemData);
     // On success, run the following code
-    console.log("postin");
+    
+
   });
 
+    
 });
-  
-
-
-
-
-
-
