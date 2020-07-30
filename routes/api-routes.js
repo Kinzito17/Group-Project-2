@@ -1,6 +1,7 @@
 // Requiring our models and passport as we've configured it
 var db = require("../models");
 var passport = require("../config/passport");
+var axios = require("axios");
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -29,30 +30,19 @@ module.exports = function(app) {
       });
   });
 
-  
-  // Route for getting some data about our user to be used client side
-  app.get("/api/sell_data", function(req, res) {
-    db.Plant.findAll({}).then(function(dbPlant) {
-      // We have access to the todos as an argument inside of the callback function
-      res.json(dbPlant);
-    });
-  });
-
-
-  app.post("/api/sell", function(req, res) {    
+  app.post("/api/sell", function(req, res) {
+    console.log(req.body);
     db.Plant.create({
       plantName: req.body.plantName,
       price: req.body.price,
       description: req.body.description,
-      imgURL: req.body.imgUrl,
-      UserId: req.user.id
+      imgURL: req.body.imgUrl
     }).then(function(dbPlant) {
       res.json(dbPlant);
+    }).catch(function(err) {
+      res.status(500).json(err);
     });
   });
-
-
-
 
   // Route for logging user out
   app.get("/logout", function(req, res) {
@@ -74,7 +64,10 @@ module.exports = function(app) {
     }
   });
 
-
-  
-
+  app.get("/api/plant/:id", function(req, res) {
+    axios.get("https://trefle.io/api/v1/plants/search?token=" + "fQwi4uQ6I6jf1791HHjEbmq1ZN24DWX-JReOLd8qNb0" + "&q=")
+      .then(function (response) {
+        res.json(response);
+      });
+  });
 };
