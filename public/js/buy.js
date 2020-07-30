@@ -41,3 +41,23 @@ $(document).ready(function() {
       $('#plant-name').append(`<div class="row">`+html+`</div>`);
     });
   }
+
+$(".buy-card").on("click", "#buy-btn", function (event) {
+  event.preventDefault();
+
+  if (event.target.type === 'submit') {
+      let id = $(this).data("id");
+      let tacoName = $("#readyEat").text();
+      console.log(id);
+      console.log(tacoName);
+
+      $.ajax({
+          url: `/api/${id}`,
+          type: "PUT",
+          data: id,
+          success: (data) => {
+              location.assign("/");
+          }
+      })
+  }
+});

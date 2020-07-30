@@ -21,7 +21,8 @@ $(document).ready(function() {
     };
     console.log(userData);
 
-    if (!userData.email || !userData.password) {
+    if (!userData.firstName || !userData.lastName || !userData.email || !userData.phone || !userData.password) {
+      alert("Oops! Something is missing. Please fill out all fields.");
       return;
     }
     // If we have an email and password, run the signUpUser function
