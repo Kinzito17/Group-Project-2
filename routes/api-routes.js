@@ -29,19 +29,30 @@ module.exports = function(app) {
       });
   });
 
-  app.post("/api/sell", function(req, res) {
-    console.log(req.body);
+  
+  // Route for getting some data about our user to be used client side
+  app.get("/api/sell_data", function(req, res) {
+    db.Plant.findAll({}).then(function(dbPlant) {
+      // We have access to the todos as an argument inside of the callback function
+      res.json(dbPlant);
+    });
+  });
+
+
+  app.post("/api/sell", function(req, res) {    
     db.Plant.create({
       plantName: req.body.plantName,
       price: req.body.price,
       description: req.body.description,
-      imgURL: req.body.imgUrl
+      imgURL: req.body.imgUrl,
+      UserId: req.user.id
     }).then(function(dbPlant) {
       res.json(dbPlant);
-    }).catch(function(err) {
-      res.status(500).json(err);
     });
   });
+
+
+
 
   // Route for logging user out
   app.get("/logout", function(req, res) {
@@ -62,4 +73,8 @@ module.exports = function(app) {
       });
     }
   });
+
+
+  
+
 };
