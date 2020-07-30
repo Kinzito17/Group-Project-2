@@ -41,7 +41,19 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+
+    //Wallet
+    wallet: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        min: 100,
+        max: 1000,
+        isNumeric: true
+      }
     }
+
   });
 
   User.associate = function(models){
