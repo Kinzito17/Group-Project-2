@@ -4,28 +4,46 @@
 $(document).ready(function () {
 
 
+  getPlants();
+
   // $("#searchBarFilt").on("keyup", function() {
   //   var value = $(this).val().toLowerCase();
-  //   $("").filter(function() {
+  //   $(".card").filter(function() {
   //     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
   //     });
   // });
 
-  getPlants();
+ 
+
+// If purchase btn clicked
+$(document).on("click",".buy-btn", function(){
+
+  var id = this.id;
+  console.log(id);
+
+  $.ajax({
+    method: "DELETE",
+    url: "/api/buy/" + id
+  }).then(getPlants);
 
 });
 
+
+
 // This function grabs plants from the database and updates the view
 function getPlants() {
+
+  $("#plant-name").text("");
   $.get("/api/sell_data").then(function (data) {
-    let plantId = data.id;
-    console.log(plantId);
+
     var html = "";
 
     for (var a = 0; a < data.length; a++) {
 
       var templateString = '<h2>' + (Object.values(data[a].plantName).join('')) + '</h2><h4> $ ' + Object.values(data[a].price).join('') + '</h4><p>' + Object.values(data[a].description).join('');
       var newImg = (Object.values(data[a].imgURL).join(''));
+      var newId = data[a].id;
+  
 
       html += `      
            <div class="col-4">
@@ -34,7 +52,7 @@ function getPlants() {
                  <div class="card-body">
                  `+ templateString + `
                  <br>
-                 <button type = input class = "btn" id = "buy-btn">Purchase
+                 <button class = "buy-btn" id = "`+newId+`">Purchase</button>
                 </div>
               </div>
         </div>`;
@@ -43,22 +61,4 @@ function getPlants() {
   });
 }
 
-$(".buy-card").on("click", "#buy-btn", function (event) {
-  event.preventDefault();
-
-  if (event.target.type === 'submit') {
-    let id = $(this).data("id");
-    let tacoName = $("#readyEat").text();
-    console.log(id);
-    console.log(tacoName);
-
-    $.ajax({
-      url: `/api/${id}`,
-      type: "PUT",
-      data: id,
-      success: (data) => {
-        location.assign("/");
-      }
-    })
-  }
 });
