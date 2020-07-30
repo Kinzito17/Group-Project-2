@@ -62,5 +62,3 @@ $(".btn").on("click", function (event) {
 "genus": "/api/v1/genus/quercus"
 
 */
-
-
