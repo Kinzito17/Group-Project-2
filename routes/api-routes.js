@@ -29,6 +29,20 @@ module.exports = function(app) {
       });
   });
 
+  app.post("/api/sell", function(req, res) {
+    console.log(req.body);
+    db.Plant.create({
+      plantName: req.body.plantName,
+      price: req.body.price,
+      description: req.body.description,
+      imgURL: req.body.imgUrl
+    }).then(function(dbPlant) {
+      res.json(dbPlant);
+    }).catch(function(err) {
+      res.status(500).json(err);
+    });
+  });
+
   // Route for logging user out
   app.get("/logout", function(req, res) {
     req.logout();
