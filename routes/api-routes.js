@@ -19,7 +19,8 @@ module.exports = function(app) {
       lastName: req.body.lastName,
       email: req.body.email,
       phone: req.body.phone,
-      password: req.body.password
+      password: req.body.password,
+      wallet: req.body.wallet
     })
       .then(function() {
         res.redirect(307, "/api/login");
@@ -44,7 +45,8 @@ module.exports = function(app) {
       // Otherwise send back the user's email and id
       res.json({
         email: req.user.email,
-        id: req.user.id
+        id: req.user.id,
+        wallet: req.user.wallet
       });
     }
   });
