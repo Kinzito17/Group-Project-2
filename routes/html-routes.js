@@ -66,18 +66,10 @@ module.exports = function(app) {
       req.logout();
       res.redirect("/");
     }
-  
   });
-
-
-
+  // If the user already has an account send them to the members page
   app.get("/info", function(req, res) {
-    // If the user already has an account send them to the members page
-    if (req.user) {
-
-      res.sendFile(path.join(__dirname, "../public/info.html"));
-      
-    }
-  });
-
+    res.sendFile(path.join(__dirname, "../public/info.html"));
+  }
+  );
 };
