@@ -20,5 +20,22 @@ module.exports = function(app) {
     });
 
   });
+
+
+  // Route for getting some data about our plant to be used client side
+  app.get("/api/price/:id", function(req, res) {
+    db.Plant.findOne({
+
+      where:{
+        id: req.params.id
+      }
+    }).then(function(dbPlant) {
+      res.json({
+        price: dbPlant.price
+
+      });
+    });
+  });
+  
   
 };
