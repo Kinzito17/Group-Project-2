@@ -34,7 +34,8 @@ module.exports = function(app) {
       }
     }).then(function(dbPlant) {
       res.json({
-        price: dbPlant.price
+        price: dbPlant.price,
+        id : dbPlant.UserId
 
       });
     });
