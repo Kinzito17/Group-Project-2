@@ -1,7 +1,7 @@
 // Requiring our models and passport as we've configured it
 var db = require("../models");
 var passport = require("../config/passport");
-var axios = require("axios");
+// var axios = require("axios");
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -50,12 +50,5 @@ module.exports = function(app) {
         wallet: req.user.wallet
       });
     }
-  });
-
-  app.get("/api/plant/:id", function(req, res) {
-    axios.get("https://trefle.io/api/v1/plants/search?token=" + "fQwi4uQ6I6jf1791HHjEbmq1ZN24DWX-JReOLd8qNb0" + "&q=")
-      .then(function (response) {
-        res.json(response);
-      });
   });
 };
