@@ -171,9 +171,26 @@ box-shadow: none;
   text-align: center;
 }
 
-#shopCont{
+
+#searchRow{
+
+  display: flex;
+  justify-content:center;
+}
+
+#plant-name{
+
+  margin-top: 50px;
+}
+
+#imgCont{
 
   text-align: center;
-  background-color: white;
+}
+
+#imgwrapper{
+
+  display: flex;
+  justify-content: center;
 }
 

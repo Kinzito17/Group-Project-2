@@ -59,6 +59,17 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/members.html"));
   });
 
+  // Route for logging user out
+  app.get("/logout", function(req, res) {
+
+    if(req.user){
+      req.logout();
+      res.redirect("/");
+    }
+  
+  });
+
+
   app.get("/info", isAuthenticated, function(req, res) {
     res.sendFile(path.join(__dirname, "../public/info.html"));
   });
