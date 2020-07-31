@@ -70,9 +70,14 @@ module.exports = function(app) {
   });
 
 
-  app.get("/info", isAuthenticated, function(req, res) {
-    app.get("/info", function(req, res) {
+
+  app.get("/info", function(req, res) {
+    // If the user already has an account send them to the members page
+    if (req.user) {
+
       res.sendFile(path.join(__dirname, "../public/info.html"));
-    });
+      
+    }
   });
+
 };
