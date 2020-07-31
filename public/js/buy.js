@@ -3,43 +3,76 @@
 /* eslint-disable unexpected character */
 $(document).ready(function () {
 
-
   getPlants();
+  newWallet();
 
-  // $("#searchBarFilt").on("keyup", function() {
-  //   var value = $(this).val().toLowerCase();
-  //   $(".card").filter(function() {
-  //     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-  //     });
-  // });
 
- 
-
-// If purchase btn clicked
-// $(document).on("click",".buy-btn", function(){
-
-//   var id = this.id;
-//   console.log(id);
-
-//   $.ajax({
-//     method: "DELETE",
-//     url: "/api/buy/" + id
-//   }).then(getPlants);
-
-// });
 
 //if purchased change sold to true
 $(document).on("click", ".buy-btn", function() {
 
-  var id = this.id;
-  console.log(id);
+  var id = this.id
+  getPrice(id)
+
+});
+
+// function to get price of the selected plant
+function getPrice(id){
+
+  $.get("/api/price/" +id).then(function(data) {
+    var newPrice = parseInt(data.price);
+    getWallet(newPrice,id);
+  });
+}
+
+// function to get the current balance in the user wallet
+function getWallet(newPrice,id){
+
+  
+  $.get("/api/wallet").then(function(data) {
+    var balance = parseInt(data.wallet);
+    checkout(newPrice,balance,id);
+    $(".wallet-name").text("$"+balance);
+  });
+}
+
+
+function checkout(newPrice,balance,id){
+
+  //able to buy
+  if (balance >= newPrice){
+    var newBalance = balance - newPrice;
+    updateWallet(newBalance);
+
+
+  }
+  //unable to buy
+  else{
+    console.log("Not enough funds");
+  }
+}
+
+//function to update wallet
+function updateWallet(newBalance) {
 
   $.ajax({
     method: "PUT",
-    url: "/api/buy/" + id
-  }).then(getPlants);
+    url: "/api/wallet",
+    data: {
+      wallet: newBalance}
+  }).then(newWallet);
 
+  console.log("purhcased");
+
+}
+
+function newWallet(){
+
+  $.get("/api/wallet").then(function(data) {
+    var balance = parseInt(data.wallet);
+    $(".wallet-name").text("$"+balance);
 });
+}
 
 // This function grabs plants from the database and updates the view
 function getPlants() {
@@ -52,7 +85,7 @@ function getPlants() {
     // if (data.sold === 0) {
     for (var a = 0; a < data.length; a++) {
 
-      var templateString = '<h2>' + (Object.values(data[a].plantName).join('')) + '</h2><h4> $ ' + Object.values(data[a].price).join('') + '</h4><p>' + Object.values(data[a].description).join('');
+      var templateString = '<h2>' + (Object.values(data[a].plantName).join('')) + '</h2><h4 id = "pricetag"> $ ' + Object.values(data[a].price).join('') + '</h4><p>' + Object.values(data[a].description).join('');
       var newImg = (Object.values(data[a].imgURL).join(''));
       var newId = data[a].id;
 

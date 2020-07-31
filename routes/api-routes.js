@@ -51,4 +51,44 @@ module.exports = function(app) {
       });
     }
   });
+
+  // Route for getting some data about our user to be used client side
+  app.get("/api/wallet", function(req, res) {
+
+    // Otherwise send back the user's email and id
+    res.json({
+      wallet: req.user.wallet
+    });
+
+  });
+
+
+  // PUT route for updating wallet balance
+  app.put("/api/wallet", function(req, res) {
+
+
+    db.User.update({
+      wallet: req.body.wallet,
+    },{
+      where: {
+        id: req.user.id
+      }
+    }).then(function() {
+
+      req.session.passport.user.wallet = req.body.wallet;
+      res.json();
+      
+    });
+   
+  });
+
+
+
+
+  app.get("/api/plant/:id", function(req, res) {
+    axios.get("https://trefle.io/api/v1/plants/search?token=" + "fQwi4uQ6I6jf1791HHjEbmq1ZN24DWX-JReOLd8qNb0" + "&q=")
+      .then(function (response) {
+        res.json(response);
+      });
+  });
 };

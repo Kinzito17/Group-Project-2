@@ -1,4 +1,4 @@
-var { response } = require("express");
+var response = require("express");
 
 // Construct results information
 var commonName = $("<h2>").text(response.data.common_name);

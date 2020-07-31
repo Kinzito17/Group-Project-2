@@ -8,17 +8,6 @@ module.exports = function(app) {
     res.json(req.user);
   });
 
-  // app.delete("/api/buy/:id", function(req, res) {
-  //   // We just have to specify which todo we want to destroy with "where"
-  //   db.Plant.destroy({
-  //     where: {
-  //       id: req.params.id
-  //     }
-  //   }).then(function(dbPlant) {
-  //     res.json(dbPlant);
-  //   });
-
-  // });
 
   app.put("/api/buy/:id", function (req, res, err) {
     console.log(req.params.id);
@@ -35,5 +24,21 @@ module.exports = function(app) {
       }).catch(err);
   });
 
+
+  // Route for getting some data about our plant to be used client side
+  app.get("/api/price/:id", function(req, res) {
+    db.Plant.findOne({
+
+      where:{
+        id: req.params.id
+      }
+    }).then(function(dbPlant) {
+      res.json({
+        price: dbPlant.price
+
+      });
+    });
+  });
+  
   
 };
