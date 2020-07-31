@@ -3,14 +3,14 @@
 /* eslint-disable unexpected character */
 $(document).ready(function () {
 
-
   getPlants();
+  newWallet();
+
 
 // If purchase btn clicked
 $(document).on("click",".buy-btn", function(){
 
   var id = this.id
-
   getPrice(id)
 
 });
@@ -21,16 +21,17 @@ function getPrice(id){
   $.get("/api/price/" +id).then(function(data) {
     var newPrice = parseInt(data.price);
     getWallet(newPrice,id);
-    console.log(newPrice);
   });
 }
 
 // function to get the current balance in the user wallet
 function getWallet(newPrice,id){
-  $.post("/api/wallet").then(function(data) {
+
+  
+  $.get("/api/wallet").then(function(data) {
     var balance = parseInt(data.wallet);
-    console.log(balance);
     checkout(newPrice,balance,id);
+    $(".wallet-name").text("$"+balance);
   });
 }
 
@@ -42,10 +43,10 @@ function checkout(newPrice,balance,id){
     var newBalance = balance - newPrice;
     updateWallet(newBalance);
 
-    $.ajax({
-    method: "DELETE",
-    url: "/api/buy/" + id
-    }).then(getPlants);
+    // $.ajax({
+    // method: "DELETE",
+    // url: "/api/buy/" + id
+    // }).then(getPlants);
 
 
   }
@@ -58,21 +59,24 @@ function checkout(newPrice,balance,id){
 //function to update wallet
 function updateWallet(newBalance) {
 
-  console.log(newBalance)
-
   $.ajax({
     method: "PUT",
     url: "/api/wallet",
     data: {
       wallet: newBalance}
-  })
+  }).then(newWallet);
+
+  console.log("purhcased");
 
 }
 
+function newWallet(){
 
-
-
-
+  $.get("/api/wallet").then(function(data) {
+    var balance = parseInt(data.wallet);
+    $(".wallet-name").text("$"+balance);
+});
+}
 
 // This function grabs plants from the database and updates the view
 function getPlants() {

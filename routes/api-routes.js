@@ -52,24 +52,6 @@ module.exports = function(app) {
     }
   });
 
-  // PUT route for updating wallet balance
-  app.put("/api/wallet", function(req, res) {
-
-    console.log(req.user.id);
-
-    db.User.update({
-      wallet: req.body.wallet
-    },{
-      where: {
-        id: req.user.id
-      }
-    }).then(function() {
-      res.json(req.user);
-      
-    });
-   
-  });
-
   // Route for getting some data about our user to be used client side
   app.get("/api/wallet", function(req, res) {
 
@@ -77,16 +59,31 @@ module.exports = function(app) {
     res.json({
       wallet: req.user.wallet
     });
-    
+
   });
 
-  app.post("/api/wallet", function(req,res){
 
-    res.json({
+  // PUT route for updating wallet balance
+  app.put("/api/wallet", function(req, res) {
 
-      wallet:req.user.wallet
+
+    db.User.update({
+      wallet: req.body.wallet,
+    },{
+      where: {
+        id: req.user.id
+      }
+    }).then(function() {
+
+      req.session.passport.user.wallet = req.body.wallet;
+      res.json();
+      
     });
+   
   });
+
+
+
 
 
   app.get("/api/plant/:id", function(req, res) {
