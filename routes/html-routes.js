@@ -71,6 +71,8 @@ module.exports = function(app) {
 
 
   app.get("/info", isAuthenticated, function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/info.html"));
+    app.get("/info", function(req, res) {
+      res.sendFile(path.join(__dirname, "../public/info.html"));
+    });
   });
 };
