@@ -21,24 +21,17 @@ $(document).ready(function () {
   newWallet();
   getPlants();
 
-//if purchased change sold to true
-$(document).on("click", ".buy-btn", function(event) {
-  event.preventDefault();
 
-  console.log("push it real good");
+
+//on button click
+$(document).on("click", ".buy-btn", function() {
+
   let id = $(this).data("id");
 
   $.ajax({
     method: "PUT",
     url: `/api/buy/${id}`
   }).then(getPlants);
-
-});
-
-//if purchased change sold to true
-$(document).on("click", ".buy-btn", function() {
-
-  let id = this.id;
 
   //This checks to see if they are trying to buy their own item
   $.get("/api/price/" + id).then(function(data) {
@@ -245,48 +238,5 @@ $.get("/api/sell_data", function (data) {
   }
 });
 
-// function getPlants() {
-//   $.get("/api/sell_data").then(function (data) {
-
-//     for (var i = 0; i < data.length; i++) {
-//         let plant = {
-//             id: data[i].id,
-//             plantName: data[i].plantName,
-//             price: data[i].price,
-//             description: data[i].description,
-//             imgURL: data[i].imgURL,
-//             sold: data[i].sold
-//         }
-//         console.log(plant);
-        
-//         let plantCard = $("<div>").attr({ class: "card", "data-id": plant.id, style: "width: 15em;"})
-//         $("#plant-name").append(plantCard);
-
-//         let cardImg = $("<img>").addClass("card-img-top").attr("src", plant.imgURL);
-//         $(plantCard).append(cardImg);
-
-//         let plantInfo = $("<div>").addClass("card-body d-flex flex-column");
-//         $(plantCard).append(plantInfo);
-
-//         let name = $("<h2>").addClass("card-title").text(plant.plantName);
-//         $(plantInfo).append(name);
-
-//         let plantPrice = $("<h4>").text("$ " + plant.price);
-//         $(plantInfo).append(plantPrice);
-
-//         let plantDesc = $("<p>").addClass("card-text").text(plant.description);
-//         $(plantInfo).append(plantDesc);
-
-//         let buyButton = $("<button>").attr({ class: "btn buy-btn mt-auto", "data-id": plant.id} ).text("Gimme Green");
-//         $(plantInfo).append(buyButton);
-//         if (plant.sold === 1) {
-//         $('#plant-name').append(plantCard);
-//         } else {
-//           $('#sold-plant').append(plantCard);
-//         }
-//     };
-//   });
-// };
-
-})
+});
 
