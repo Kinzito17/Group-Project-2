@@ -21,17 +21,10 @@ $(document).ready(function () {
   newWallet();
   getPlants();
 
-
-
 //on button click
 $(document).on("click", ".buy-btn", function() {
 
   let id = $(this).data("id");
-
-  $.ajax({
-    method: "PUT",
-    url: `/api/buy/${id}`
-  }).then(getPlants);
 
   //This checks to see if they are trying to buy their own item
   $.get("/api/price/" + id).then(function(data) {
@@ -39,6 +32,12 @@ $(document).on("click", ".buy-btn", function() {
       alert("Can't buy your own item");
     }
     else{
+
+      $.ajax({
+        method: "PUT",
+        url: `/api/buy/${id}`
+      }).then(getPlants);
+    
       //Allow them to purchase
       getPrice(id);
       idforseller = data.id;
@@ -124,58 +123,14 @@ function newWallet(){
     })
   };
 
-
-function getPlants() {
+  function getPlants() {
   $.get("/api/sell_data", function (data) {
-      if (data.length !== 0 && arr.length !== 0 && data.length !== arr.length) {
-          let arrLength = arr.length;
-
-          for (var i = arrLength; i < data.length; i++) {
-          let plant = {
-              id: data[i].id,
-              plantName: data[i].plantName,
-              price: data[i].price,
-              description: data[i].description,
-              imgURL: data[i].imgURL,
-              sold: data[i].sold
-          }
-          arr.push(plant.id)
-
-          let plantCard = $("<div>").attr({ class: "card", "data-id": plant.id, style: "width: 15em;"})
-          $("#plant-name").append(plantCard);
+    if (data.length !== 0) {
+        data.map(plant => {
+            arr.push(plant.id)
   
-          let cardImg = $("<img>").addClass("card-img-top").attr("src", plant.imgURL);
-          $(plantCard).append(cardImg);
+            if (plant.sold === false) {
   
-          let plantInfo = $("<div>").addClass("card-body d-flex flex-column");
-          $(plantCard).append(plantInfo);
-  
-          let name = $("<h2>").addClass("card-title").text(plant.plantName);
-          $(plantInfo).append(name);
-  
-          let plantPrice = $("<h4>").text("$ " + plant.price);
-          $(plantInfo).append(plantPrice);
-  
-          let plantDesc = $("<p>").addClass("card-text").text(plant.description);
-          $(plantInfo).append(plantDesc);
-  
-          let buyButton = $("<button>").attr({ class: "btn buy-btn mt-auto", "data-id": plant.id} ).text("Gimme Green");
-          $(plantInfo).append(buyButton);
-
-          $('#plant-name').append(plantCard);
-          }
-          } else {
-              for (var i = 0; i < data.length; i++) {
-                let plant = {
-                  id: data[i].id,
-                  plantName: data[i].plantName,
-                  price: data[i].price,
-                  description: data[i].description,
-                  imgURL: data[i].imgURL,
-                  sold: data[i].sold
-              }
-              arr.push(plant.id)
-
               let plantCard = $("<div>").attr({ class: "card", "data-id": plant.id, style: "width: 15em;"})
               $("#plant-name").append(plantCard);
       
@@ -193,50 +148,150 @@ function getPlants() {
       
               let plantDesc = $("<p>").addClass("card-text").text(plant.description);
               $(plantInfo).append(plantDesc);
-
+    
               let buyButton = $("<button>").attr({ class: "btn buy-btn mt-auto", "data-id": plant.id} ).text("Gimme Green");
               $(plantInfo).append(buyButton);
-    
-              $('#plant-name').append(plantCard);
-
-          };
-      }
-  })
-}
-
-$.get("/api/sell_data", function (data) {
-  if (data.length !== 0) {
-      data.map(plant => {
-          arr.push(plant.id)
-
-          let plantCard = $("<div>").attr({ class: "card", "data-id": plant.id, style: "width: 15em;"})
-          $("#plant-name").append(plantCard);
   
-          let cardImg = $("<img>").addClass("card-img-top").attr("src", plant.imgURL);
-          $(plantCard).append(cardImg);
-  
-          let plantInfo = $("<div>").addClass("card-body d-flex flex-column");
-          $(plantCard).append(plantInfo);
-  
-          let name = $("<h2>").addClass("card-title").text(plant.plantName);
-          $(plantInfo).append(name);
-  
-          let plantPrice = $("<h4>").text("$ " + plant.price);
-          $(plantInfo).append(plantPrice);
-  
-          let plantDesc = $("<p>").addClass("card-text").text(plant.description);
-          $(plantInfo).append(plantDesc);
-
-          if (plant.sold !== true) {
-            let buyButton = $("<button>").attr({ class: "btn buy-btn mt-auto", "data-id": plant.id} ).text("Gimme Green");
-            $(plantInfo).append(buyButton);
               $("#plant-name").append(plantCard);
-          } else {
-            $( plantCard ).appendTo( ".sold-plant" );
-          }
-      })
-  }
-});
+  
+            } else {
+              let plantCard = $("<div>").attr({ class: "card", "data-id": plant.id, style: "width: 15em;"})
+              $(".sold-plant").append(plantCard);
+      
+              let cardImg = $("<img>").addClass("card-img-top").attr("src", plant.imgURL);
+              $(plantCard).append(cardImg);
+      
+              let plantInfo = $("<div>").addClass("card-body d-flex flex-column");
+              $(plantCard).append(plantInfo);
+      
+              let name = $("<h2>").addClass("card-title").text(plant.plantName);
+              $(plantInfo).append(name);
+      
+              let plantPrice = $("<h4>").text("$ " + plant.price);
+              $(plantInfo).append(plantPrice);
+      
+              let plantDesc = $("<p>").addClass("card-text").text(plant.description);
+              $(plantInfo).append(plantDesc);
+  
+              $( plantCard ).appendTo( ".sold-plant" );
+            }
+        })
+    }
+  });
+};
+
+// function getPlants() {
+//   $.get("/api/sell_data", function (data) {
+//       if (data.length !== 0 && arr.length !== 0 && data.length !== arr.length) {
+//           let arrLength = arr.length;
+
+//           for (var i = arrLength; i < data.length; i++) {
+//           let plant = {
+//               id: data[i].id,
+//               plantName: data[i].plantName,
+//               price: data[i].price,
+//               description: data[i].description,
+//               imgURL: data[i].imgURL,
+//               sold: data[i].sold
+//           }
+//           arr.push(plant.id)
+
+//           let plantCard = $("<div>").attr({ class: "card", "data-id": plant.id, style: "width: 15em;"})
+//           $("#plant-name").append(plantCard);
+  
+//           let cardImg = $("<img>").addClass("card-img-top").attr("src", plant.imgURL);
+//           $(plantCard).append(cardImg);
+  
+//           let plantInfo = $("<div>").addClass("card-body d-flex flex-column");
+//           $(plantCard).append(plantInfo);
+  
+//           let name = $("<h2>").addClass("card-title").text(plant.plantName);
+//           $(plantInfo).append(name);
+  
+//           let plantPrice = $("<h4>").text("$ " + plant.price);
+//           $(plantInfo).append(plantPrice);
+  
+//           let plantDesc = $("<p>").addClass("card-text").text(plant.description);
+//           $(plantInfo).append(plantDesc);
+  
+//           let buyButton = $("<button>").attr({ class: "btn buy-btn mt-auto", "data-id": plant.id} ).text("Gimme Green");
+//           $(plantInfo).append(buyButton);
+
+//           $('#plant-name').append(plantCard);
+//           }
+//           } else {
+//               for (var i = 0; i < data.length; i++) {
+//                 let plant = {
+//                   id: data[i].id,
+//                   plantName: data[i].plantName,
+//                   price: data[i].price,
+//                   description: data[i].description,
+//                   imgURL: data[i].imgURL,
+//                   sold: data[i].sold
+//               }
+//               arr.push(plant.id)
+
+//               let plantCard = $("<div>").attr({ class: "card", "data-id": plant.id, style: "width: 15em;"})
+//               $("#plant-name").append(plantCard);
+      
+//               let cardImg = $("<img>").addClass("card-img-top").attr("src", plant.imgURL);
+//               $(plantCard).append(cardImg);
+      
+//               let plantInfo = $("<div>").addClass("card-body d-flex flex-column");
+//               $(plantCard).append(plantInfo);
+      
+//               let name = $("<h2>").addClass("card-title").text(plant.plantName);
+//               $(plantInfo).append(name);
+      
+//               let plantPrice = $("<h4>").text("$ " + plant.price);
+//               $(plantInfo).append(plantPrice);
+      
+//               let plantDesc = $("<p>").addClass("card-text").text(plant.description);
+//               $(plantInfo).append(plantDesc);
+
+//               let buyButton = $("<button>").attr({ class: "btn buy-btn mt-auto", "data-id": plant.id} ).text("Gimme Green");
+//               $(plantInfo).append(buyButton);
+    
+//               $('#plant-name').append(plantCard);
+
+//           };
+//       }
+//   })
+// }
+
+// $.get("/api/sell_data", function (data) {
+//   if (data.length !== 0) {
+//       data.map(plant => {
+//           arr.push(plant.id)
+
+//           let plantCard = $("<div>").attr({ class: "card", "data-id": plant.id, style: "width: 15em;"})
+//           $("#plant-name").append(plantCard);
+  
+//           let cardImg = $("<img>").addClass("card-img-top").attr("src", plant.imgURL);
+//           $(plantCard).append(cardImg);
+  
+//           let plantInfo = $("<div>").addClass("card-body d-flex flex-column");
+//           $(plantCard).append(plantInfo);
+  
+//           let name = $("<h2>").addClass("card-title").text(plant.plantName);
+//           $(plantInfo).append(name);
+  
+//           let plantPrice = $("<h4>").text("$ " + plant.price);
+//           $(plantInfo).append(plantPrice);
+  
+//           let plantDesc = $("<p>").addClass("card-text").text(plant.description);
+//           $(plantInfo).append(plantDesc);
+
+//           if (plant.sold !== true) {
+//             let buyButton = $("<button>").attr({ class: "btn buy-btn mt-auto", "data-id": plant.id} ).text("Gimme Green");
+//             $(plantInfo).append(buyButton);
+//               $("#plant-name").append(plantCard);
+//           } else {
+//             $( plantCard ).appendTo( ".sold-plant" );
+//           }
+//       })
+//   }
+// });
 
 });
 
