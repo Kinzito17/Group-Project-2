@@ -17,6 +17,13 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/api/sell_data", function(req, res) {
+    db.Plant.findAll({}).then(function(dbPlant) {
+      res.json(dbPlant);
+    });
+  });
+
+
   app.post("/api/sell", function(req, res) {    
     db.Plant.create({
       plantName: req.body.plantName,
