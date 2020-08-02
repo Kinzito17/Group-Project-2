@@ -10,7 +10,6 @@ $(document).ready(function () {
     event.preventDefault();
     var searchQuery = $(".searchBar").val();
     searchPlants(searchQuery);
-
   });
 
   // Function to get information from Trefle API
@@ -69,11 +68,38 @@ $(document).ready(function () {
               $(".family-text").text("Family Common Name: " + family);
             }
           });
-          // searchWiki(searchQuery);
           // getResult(searchQuery);
 
           // Function to get information from Wikipedia API
           // function searchWiki(searchQuery) {
+          //   var url = "https://en.wikipedia.org/w/api.php";
+
+          //   var params = {
+          //     action: "query",
+          //     format: "json",
+          //     titles: "",
+          //     prop: "info",
+          //     inprop: "url|talkid"
+          //   };
+
+          //   url = url + "?origin=*";
+          //   Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
+
+          //   fetch(url)
+          //     .then(function (response) { return response.json(); })
+          //     .then(function (response) {
+          //       var pages = response.query.pages;
+          //       for (var p in pages) {
+          //         console.log(pages[p].title + " has " + pages[p].length + " bytes. ");
+          //       }
+          //     })
+          //     .catch(function (error) {
+          //       console.log(error);
+          // });
+
+
+          // searchWiki();
+
           //   $.ajax({
           //     url: "https://en.wikipedia.org/w/api.php",
           //     data: { action: "query", list: "search", srsearch: $("input[name=Wikipedia]").val(), format: "json" },
