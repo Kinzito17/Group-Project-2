@@ -52,18 +52,6 @@ $(document).ready(function () {
           $(".scientificName").prepend(plantDiv);
           $(".family-text").prepend(plantDiv);
           $(".break").prepend(plantDiv);
-  
-          // Construct results information
-          var imgPlant = response.data[i].image_url;
-          var commonName = response.data[i].common_name;
-          var scientificName = response.data[i].scientific_name;
-          var family = response.data[i].family_common_name;
-  
-          $("#imgPlant").attr("src", imgPlant);
-          $(".commonName-text").text("Common Name: " + commonName);
-          $(".scientificName-text").text("Scientific Name: " + scientificName);
-          $(".family-text").text("Family Common Name: " + family);
-  
         
         }
     });
