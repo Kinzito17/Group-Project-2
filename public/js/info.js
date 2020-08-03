@@ -31,7 +31,7 @@ $(document).ready(function () {
             // Loop API results
             var results = response.data;
 
-            for (var i = 0; i < response.data.length; i++) {
+            for (var i = 0; i < results.length; i++) {
               var plantImg = $("<Img>");
               plantImg.attr("src", results[i].image_url)
                 .width("200px").height("200px");
@@ -40,20 +40,19 @@ $(document).ready(function () {
               var pCommon = $("<p>").text("Common Name: " + results[i].common_name);
               var pSci = $("<p>").text("Scientific Name: " + results[i].scientific_name);
               var pFamily = $("<p>").text("Family Name: " + results[i].family_common_name);
-              var pDescription = $("<p>").text("Description: " + results[i].description);
+              // var pDescription = $("<p>").text("Description: " + results[i].description);
 
               plantDiv.append(plantImg);
               plantDiv.append(pCommon);
               plantDiv.append(pSci);
               plantDiv.append(pFamily);
-              plantDiv.append(pDescription);
+              // plantDiv.append(pDescription);
 
               $(".plantPic").prepend(plantDiv);
               $(".commonName").prepend(plantDiv);
               $(".scientificName").prepend(plantDiv);
               $(".family-text").prepend(plantDiv);
-              $(".wiki-text").prepend(plantDiv);
-              $(".break").prepend(plantDiv);
+              // $(".wiki-text").prepend(plantDiv);
 
               // Construct results information
               var imgPlant = response.data[i].image_url;
@@ -66,55 +65,75 @@ $(document).ready(function () {
               $(".commonName-text").text("Common Name: " + commonName);
               $(".scientificName-text").text("Scientific Name: " + scientificName);
               $(".family-text").text("Family Common Name: " + family);
+
+              searchWiki();
             }
           });
-          // getResult(searchQuery);
 
-          // Function to get information from Wikipedia API
-          // function searchWiki(searchQuery) {
-          //   var url = "https://en.wikipedia.org/w/api.php";
+          function searchWiki() {
+            var queryUrl = "https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + searchQuery + "&utf8=&format=json";
+            console.log(queryUrl);
 
-          //   var params = {
-          //     action: "query",
-          //     format: "json",
-          //     titles: "",
-          //     prop: "info",
-          //     inprop: "url|talkid"
-          //   };
+            fetch(queryUrl)
+              .then(function (response) {
 
-          //   url = url + "?origin=*";
-          //   Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
+                if (response.ok) {
 
-          //   fetch(url)
-          //     .then(function (response) { return response.json(); })
-          //     .then(function (response) {
-          //       var pages = response.query.pages;
-          //       for (var p in pages) {
-          //         console.log(pages[p].title + " has " + pages[p].length + " bytes. ");
-          //       }
-          //     })
-          //     .catch(function (error) {
-          //       console.log(error);
-          // });
+                  $.ajax({
+                    url: queryUrl,
+                    method: "GET"
+                  }).then(function (response) {
+                    console.log(response);
+                  });
+
+                  // Function to get information from Wikipedia API
+                  // function searchWiki(searchQuery) {
+                  //   var url = "https://en.wikipedia.org/w/api.php";
+
+                  //   var params = {
+                  //     action: "query",
+                  //     format: "json",
+                  //     titles: "",
+                  //     prop: "info",
+                  //     inprop: "url|talkid"
+                  //   };
+
+                  //   url = url + "?origin=*";
+                  //   Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
+
+                  //   fetch(url)
+                  //     .then(function (response) { return response.json(); })
+                  //     .then(function (response) {
+                  //       var pages = response.query.pages;
+                  //       for (var p in pages) {
+                  //         console.log(pages[p].title + " has " + pages[p].length + " bytes. ");
+                  //       }
+                  //     })
+                  //     .catch(function (error) {
+                  //       console.log(error);
+                  // });
 
 
-          // searchWiki();
+                  // searchWiki();
 
-          //   $.ajax({
-          //     url: "https://en.wikipedia.org/w/api.php",
-          //     data: { action: "query", list: "search", srsearch: $("input[name=Wikipedia]").val(), format: "json" },
-          //     dataType: "jsonp"
-          //     // success: processResult
-          //   });
-          // }
+                  //   $.ajax({
+                  //     url: "https://en.wikipedia.org/w/api.php",
+                  //     data: { action: "query", list: "search", srsearch: $("input[name=Wikipedia]").val(), format: "json" },
+                  //     dataType: "jsonp"
+                  //     // success: processResult
+                  //   });
+                  // }
 
-          // function getResult(searchQuery) {
-          //   var description = response.data;
-          //   $(".wiki-text").text("Description: " + description);
-          // }
+                  // function getResult(searchQuery) {
+                  //   var description = response.data;
+                  //   $(".wiki-text").text("Description: " + description);
+                  // }
 
-          // Clear search results
-          $(".searchBar").empty();
+                  // Clear search results
+                  $(".searchBar").empty();
+                }
+              });
+          }
         }
       });
   }
