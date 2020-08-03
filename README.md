@@ -5,7 +5,25 @@
 A website for plant connoisseurs everywhere!
 Plant Partner is a place to buy and sell plants with a sign up and login to save user information and plants for sale or purchased. It will use the Trefle api to gather information and photos of the selected plant. All information will be saved to a database for future usage.
 
-Deployed: 
+## Technologies and Features
+
+Technologies
+```
+* Treffle API
+* Wiki API
+* Node.js
+* Sequelize
+* Passport.js
+* Restful API's and jQuery
+```
+Features
+```
+* Users can purchase or sell plants
+* Plants will then populate buy or sell history
+* Wallet will update (Please keep in mind wallet balance cannot decrease under 100 or exceed 1000)
+* Search function for more information on plants
+* Recently sold function on index page
+```
 
 ## User Story
 ```
@@ -29,3 +47,19 @@ LOCALDB_URL=mysql://root:dbpassword@localhost:3306/Project2Dev
 **NOTE** Do *not* check in your `.env` file into source control, it is particular to *your* environment.
 
 ## Screenshots
+
+1. Main Page 
+
+![Alt text](/screenshots/main.PNG "Optional Title")
+
+2. Singup Page
+
+![Alt text](/screenshots/signup.PNG "Optional Title")
+
+3. Sell Page
+
+![Alt text](/screenshots/sell.PNG "Optional Title")
+
+4. Shop Page
+
+![Alt text](/screenshots/buy.PNG "Optional Title")
