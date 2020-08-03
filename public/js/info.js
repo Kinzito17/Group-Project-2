@@ -80,8 +80,7 @@ $(document).ready(function () {
 
   function searchWiki(searchQuery){
 
-    var url = "https://en.wikipedia.org/w/api.php?action=opensearch&format=json&origin=*&search="+ searchQuery;
-      
+    var url = "https://en.wikipedia.org/api/rest_v1/page/summary/"+ searchQuery;
 
     fetch(url)
       .then(function (response) {
@@ -94,13 +93,17 @@ $(document).ready(function () {
           }).then(function (response) {
 
             console.log(response);
-            $("#wikiLink").text(response[3][0]);
-            $("#wikiLink").attr("href", response[3][0]);
+
+            $("#wikitext").text(response.extract);
+            $("#wikiLink").text(response.content_urls.desktop.page);
+            $("#wikiLink").attr("href", response.content_urls.desktop.page);
 
 
           });
         }
       });
+
+
  
     
   }
