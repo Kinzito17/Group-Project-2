@@ -11,6 +11,13 @@ $(document).ready(function () {
   // Event listener for when search button is clicked
   $(".search-btn").on("click", function (event) {
     event.preventDefault();
+
+    $(".plantPic").empty();
+    $(".scientificName").empty();
+    $(".commonName-text").empty();
+    $(".family-text").empty();
+    $(".break").empty();
+
     var searchQuery = $(".searchBar").val();
     searchWiki(searchQuery);
     searchPlants(searchQuery);
@@ -25,7 +32,7 @@ $(document).ready(function () {
         // Loop API results
         var results = response.data;
   
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 5; i++) {
   
           var plantImg = $("<Img>");
           plantImg.attr({ src: results[i].image_url, class: "plantPic" })
