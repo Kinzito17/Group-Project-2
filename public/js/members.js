@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
   let userid = 0;
-  
+
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
   $.get("/api/wallet").then(function (data) {
@@ -19,27 +19,12 @@ $(document).ready(function () {
 
         if (userid === parseInt(plant.buyerId)) {
 
-          let plantCard = $("<div>").attr({ class: "card", "data-id": plant.id, style: "width: 15em;" })
-          $(".bought-plant").append(plantCard);
+          let boughtPlant = ".bought-plant"
+          console.log(plant);
 
-          let cardImg = $("<img>").addClass("card-img-top").attr("src", plant.imgURL);
-          $(plantCard).append(cardImg);
+          placePlants(boughtPlant, plant);
 
-          let plantInfo = $("<div>").addClass("card-body d-flex flex-column");
-          $(plantCard).append(plantInfo);
-
-          let name = $("<h2>").addClass("card-title").text(plant.plantName);
-          $(plantInfo).append(name);
-
-          let plantPrice = $("<h4>").text("$ " + plant.price);
-          $(plantInfo).append(plantPrice);
-
-          let plantDesc = $("<p>").addClass("card-text").text(plant.description);
-          $(plantInfo).append(plantDesc);
-
-          $(plantCard).appendTo(".bought-plant");
-
-        } 
+        }
       })
     }
   })
@@ -51,27 +36,11 @@ $(document).ready(function () {
 
         if (plant.sold === true && userid === plant.UserId) {
 
-          let plantCard = $("<div>").attr({ class: "card", "data-id": plant.id, style: "width: 15em;" })
-          $(".sold-plant").append(plantCard);
+          let soldPlant = ".sold-plant"
 
-          let cardImg = $("<img>").addClass("card-img-top").attr("src", plant.imgURL);
-          $(plantCard).append(cardImg);
+          placePlants(soldPlant, plant);
 
-          let plantInfo = $("<div>").addClass("card-body d-flex flex-column");
-          $(plantCard).append(plantInfo);
-
-          let name = $("<h2>").addClass("card-title").text(plant.plantName);
-          $(plantInfo).append(name);
-
-          let plantPrice = $("<h4>").text("$ " + plant.price);
-          $(plantInfo).append(plantPrice);
-
-          let plantDesc = $("<p>").addClass("card-text").text(plant.description);
-          $(plantInfo).append(plantDesc);
-
-          $(plantCard).appendTo(".sold-plant");
-
-        } 
+        }
       })
     }
   })

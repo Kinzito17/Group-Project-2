@@ -2,14 +2,14 @@ $(document).ready(function () {
 
     newWallet();
 
-      //Get the balance of the wallet and display
-  function newWallet() {
+    //Get the balance of the wallet and display
+    function newWallet() {
 
-    $.get("/api/wallet").then(function(data) {
-      var balance = parseInt(data.wallet);
-      $(".wallet-name").text("$" + balance);
-    })
-  };
+        $.get("/api/wallet").then(function (data) {
+            var balance = parseInt(data.wallet);
+            $(".wallet-name").text("$" + balance);
+        })
+    };
 
     getPlants();
 
@@ -21,25 +21,11 @@ $(document).ready(function () {
 
                     if (plant.sold === true) {
 
-                        let plantCard = $("<div>").attr({ class: "card", "data-id": plant.id, style: "width: 15em;" })
-                        $("#recent-sold").append(plantCard);
+                        let recentSold = "#recent-sold"
+                        console.log(plant);
 
-                        let cardImg = $("<img>").addClass("card-img-top").attr("src", plant.imgURL);
-                        $(plantCard).append(cardImg);
+                        placePlants(recentSold, plant);
 
-                        let plantInfo = $("<div>").addClass("card-body d-flex flex-column");
-                        $(plantCard).append(plantInfo);
-
-                        let name = $("<h2>").addClass("card-title").text(plant.plantName);
-                        $(plantInfo).append(name);
-
-                        let plantPrice = $("<h4>").text("$ " + plant.price);
-                        $(plantInfo).append(plantPrice);
-
-                        let plantDesc = $("<p>").addClass("card-text").text(plant.description);
-                        $(plantInfo).append(plantDesc);
-
-                        $("#recent-sold").append(plantCard);
                     }
                 })
             }
