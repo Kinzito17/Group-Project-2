@@ -1,11 +1,11 @@
 /* eslint-disable quotes */
 /* eslint-disable unexpected character */
-$(document).ready(function() {
+$(document).ready(function () {
   let userid = 0;
   let idforseller = 0;
 
   //filter card selection in shop
-  $("#searchBarFilt").on("keyup", function() {
+  $("#searchBarFilt").on("keyup", function () {
     var value = $(this).val().toLowerCase();
     $(".card").filter(function () {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
@@ -13,7 +13,7 @@ $(document).ready(function() {
   });
 
   //get user data to get the user id
-  $.get("api/user_data").then(function(data) {
+  $.get("api/user_data").then(function (data) {
     userid = data.id;
   })
 
@@ -21,12 +21,12 @@ $(document).ready(function() {
   getPlants();
 
   //on button click
-  $(document).on("click", ".buy-btn", function() {
+  $(document).on("click", ".buy-btn", function () {
 
     let id = $(this).data("id");
 
     //This checks to see if they are trying to buy their own item
-    $.get("/api/price/" + id).then(function(data) {
+    $.get("/api/price/" + id).then(function (data) {
       if (data.id === userid) {
         alert("Can't buy your own item");
       }
@@ -48,7 +48,7 @@ $(document).ready(function() {
   // function to get price of the selected plant
   function getPrice(id) {
 
-    $.get("/api/price/" + id).then(function(data) {
+    $.get("/api/price/" + id).then(function (data) {
       var newPrice = parseInt(data.price);
       getWallet(newPrice);
     });
@@ -57,7 +57,7 @@ $(document).ready(function() {
   // function to get the current balance in the user wallet
   function getWallet(newPrice) {
 
-    $.get("/api/wallet").then(function(data) {
+    $.get("/api/wallet").then(function (data) {
       var balance = parseInt(data.wallet);
       checkout(newPrice, balance);
       $(".wallet-name").text("$" + balance);
@@ -93,7 +93,7 @@ $(document).ready(function() {
 
   function getSellerWallet(newPrice, id, update) {
 
-    $.get("/api/wallet/" + id).then(function(data) {
+    $.get("/api/wallet/" + id).then(function (data) {
       var sellerwallet = data.wallet;
       var newbalance = parseInt(sellerwallet) + newPrice;
       updateSellerWallet(newbalance, id, update);
@@ -118,14 +118,14 @@ $(document).ready(function() {
   //Get the balance of the wallet and display
   function newWallet() {
 
-    $.get("/api/wallet").then(function(data) {
+    $.get("/api/wallet").then(function (data) {
       var balance = parseInt(data.wallet);
       $(".wallet-name").text("$" + balance);
     })
   };
 
   function getPlants() {
-    $.get("/api/sell_data", function(data) {
+    $.get("/api/sell_data", function (data) {
       console.log(data);
       if (data.length !== 0) {
         data.map(plant => {
