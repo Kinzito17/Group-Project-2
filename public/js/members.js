@@ -1,5 +1,7 @@
 $(document).ready(function () {
+
   let userid = 0;
+  
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
   $.get("/api/wallet").then(function (data) {

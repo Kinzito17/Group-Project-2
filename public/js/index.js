@@ -1,5 +1,16 @@
 $(document).ready(function () {
 
+    newWallet();
+
+      //Get the balance of the wallet and display
+  function newWallet() {
+
+    $.get("/api/wallet").then(function(data) {
+      var balance = parseInt(data.wallet);
+      $(".wallet-name").text("$" + balance);
+    })
+  };
+
     getPlants();
 
     function getPlants() {

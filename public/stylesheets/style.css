@@ -205,7 +205,15 @@ font-size: 20px;
   width: 200px;
   height: 200px;
   border-radius: 10px;
+  transition: transform .2s;
 }
+
+.plantPic:hover {
+  transform: scale(1.35);
+  border-radius: 20px;
+  border: 1px solid black;
+}
+
 
 .for-sale {
   justify-content: center;
