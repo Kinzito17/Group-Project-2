@@ -223,6 +223,11 @@ font-size: 20px;
   margin-left: 10px;
 }
 
+.garden-row {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
 #wikitext {
   padding: 20px;
   font-size: 20px;
